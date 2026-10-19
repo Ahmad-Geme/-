@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أشيائي | منصة بيع وشراء أجهزة المحمول في مصر</title>
+
+    <!-- Google Fonts (Cairo Font) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #1b263b;
+            --secondary-color: #00b4d8;
+            --accent-color: #e63946;
+            --bg-light: #f4f6f9;
+            --text-dark: #212529;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --border-radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- الهيدر وواجهة الموقع (الرئيسية) --- */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #0d1b2a);
+            color: var(--white);
+            padding: 40px 20px 50px 20px;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .site-title {
+            font-size: 45px;
+            font-weight: 900;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+        }
+
+        .site-description {
+            font-size: 17px;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        /* --- الروابط أسفل اسم الموقع مباشرة --- */
+        .links-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .link-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .main-nav-btn {
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-buy-link {
+            background-color: var(--secondary-color);
+            color: var(--white);
+        }
+
+        .btn-sell-link {
+            background-color: var(--accent-color);
+            color: var(--white);
+        }
+
+        .main-nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            filter: brightness(1.1);
+        }
+
+        /* --- حاوية الصفحات المستقلة --- */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* نظام إظهار وإخفاء الصفحات */
+        .page-section {
+            display: none; /* إخفاء جميع الصفحات افتراضياً */
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .page-section.active {
+            display: block; /* إظهار الصفحة النشطة فقط */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background-color: var(--secondary-color);
+            border-radius: 2px;
+        }
+
+        /* زر العودة للرئيسية */
+        .back-home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            background: #e2e8f0;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            color: var(--primary-color);
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+        .back-home-btn:hover {
+            background: #cbd5e1;
+        }
+
+        /* --- تنسيق صفحة الشراء (عرض الأجهزة) --- */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            background-color: #fafafa;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        .product-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .product-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .price {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--accent-color);
+        }
+
+        .btn-buy {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-buy:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* --- تنسيق صفحة البيع والنموذج --- */
+        .sell-section-box {
+            background: var(--white);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--accent-color);
+        }
+
+        .sell-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 15px;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            background-color: #f8fafc;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--secondary-color);
+            background-color: var(--white);
+        }
+
+        .btn-submit {
+            background-color: var(--accent-color);
+            color: var(--white);
+            padding: 14px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
+        }
+
+        .btn-submit:hover {
+            background-color: #c5222f;
+        }
+
+        /* --- الفوتر --- */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+
+        @media (max-width: 768px) {
+            .site-title { font-size: 32px; }
+            .sell-section-box { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الهيدر والواجهة الرئيسية (تظهر دائماً في الأعلى) -->
+    <header>
+        <div class="hero-container">
+            <h1 class="site-title" onclick="showPage('home-page')">
+                <i class="fa-solid fa-mobile-screen-button"></i> أشيائي
+            </h1>
+            <p class="site-description">المنصة الأولى في مصر لبيع وشراء الهواتف المحمولة المستعملة والجديدة بأمان وسهولة</p>
+
+            <!-- الروابط أسفل اسم الموقع (كل زر يفتح صفحة مستقلة) -->
+            <div class="links-wrapper">
+                <!-- مجموعة روابط الشراء -->
+                <div class="link-group">
+                    <button class="main-nav-btn btn-buy-link" onclick="showPage('buy-phones-page')">
+                        <i class="fa-solid fa-cart-shopping"></i> صفحة شراء الهواتف
+                    </button>
+                    <button class="main-nav-btn btn-buy-link" onclick="showPage('offers-page')" style="background-color: #1d3557;">
+                        <i class="fa-solid fa-fire"></i> صفحة العروض المميزة
+                    </button>
+                </div>
+
+                <!-- مجموعة روابط البيع -->
+                <div class="link-group" style="margin-top: 5px;">
+                    <button class="main-nav-btn btn-sell-link" onclick="showPage('sell-phone-page')">
+                        <i class="fa-solid fa-tag"></i> صفحة بيع جهازك
+                    </button>
+                    <button class="main-nav-btn btn-sell-link" onclick="showPage('add-ad-page')" style="background-color: #b7094c;">
+                        <i class="fa-solid fa-circle-plus"></i> صفحة إضافة إعلان جديد
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- ================= 1. الصفحة الرئيسية (الافتراضية) ================= -->
+        <div id="home-page" class="page-section active">
+            <div class="section-header">
+                <h2 class="section-title">أهلاً بك في منصة أشيائي</h2>
+            </div>
+            <p style="text-align: center; font-size: 18px; color: #555; max-width: 600px; margin: 0 auto 30px auto;">
+                اختر من الروابط بالأعلى القسم الذي تريده (صفحات الشراء أو صفحات البيع) لتنتقل إليها مباشرة وتتمكن من تصفح الهواتف أو عرض هاتفك للبيع بكل سهولة بالجنيه المصري.
+            </p>
+        </div>
+
+        <!-- ================= 2. صفحة شراء الهواتف ================= -->
+        <div id="buy-phones-page" class="page-section">
+            <button class="back-home-btn" onclick="showPage('home-page')"><i class="fa-solid fa-arrow-right"></i> عودة للرئيسية</button>
+            <div class="section-header">
+                <h2 class="section-title">صفحة شراء الهواتف المحمولة</h2>
+            </div>
+
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/200x200?text=iPhone+15+Pro" alt="آيفون 15 برو" class="product-img">
+                    <h3 class="product-title">آيفون 15 برو ماكس</h3>
+                    <p class="product-desc">المساحة: 256 جيجا | الحالة: كالجديد تماماً | بطارية 95%</p>
+                    <div class="product-bottom">
+                        <span class="price">52,500 ج.م</span>
+                        <button class="btn-buy" onclick="buyAlert('آيفون 15 برو ماكس')">شراء الآن</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/200x200?text=Samsung+S24+Ultra" alt="سامسونج S24 ألترا" class="product-img">
+                    <h3 class="product-title">سامسونج S24 ألترا</h3>
+                    <p class="product-desc">المساحة: 512 جيجا | الحالة: زيرو بالضمان المحلي</p>
+                    <div class="product-bottom">
+                        <span class="price">48,000 ج.م</span>
+                        <button class="btn-buy" onclick="buyAlert('سامسونج S24 ألترا')">شراء الآن</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 3. صفحة العروض المميزة ================= -->
+        <div id="offers-page" class="page-section">
+            <button class="back-home-btn" onclick="showPage('home-page')"><i class="fa-solid fa-arrow-right"></i> عودة للرئيسية</button>
+            <div class="section-header">
+                <h2 class="section-title">صفحة العروض المميزة والخصومات</h2>
+            </div>
+
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/200x200?text=Redmi+Note+13" alt="ريدمي نوت 13" class="product-img">
+                    <h3 class="product-title">شاومي ريدمي نوت 13 برو (عرض خاص)</h3>
+                    <p class="product-desc">المساحة: 256 جيجا | الحالة: جديد متبرشم مع هدية</p>
+                    <div class="product-bottom">
+                        <span class="price">13,500 ج.م</span>
+                        <button class="btn-buy" onclick="buyAlert('شاومي ريدمي نوت 13 برو')">اغتنم العرض</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 4. صفحة بيع جهازك ================= -->
+        <div id="sell-phone-page" class="page-section">
+            <button class="back-home-btn" onclick="showPage('home-page')"><i class="fa-solid fa-arrow-right"></i> عودة للرئيسية</button>
+            <div class="section-header">
+                <h2 class="section-title">صفحة بيع جهازك المحمول</h2>
+            </div>
+
+            <div class="sell-section-box">
+                <form class="sell-form" onsubmit="submitForm(event)">
+                    <div class="form-group">
+                        <label>ماركة الهاتف:</label>
+                        <select required>
+                            <option value="">اختر الماركة...</option>
+                            <option value="apple">أبل (Apple)</option>
+                            <option value="samsung">سامسونج (Samsung)</option>
+                            <option value="xiaomi">شاومي (Xiaomi)</option>
+                            <option value="oppo">أوبو (Oppo)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>موديل الجهاز:</label>
+                        <input type="text" placeholder="مثال: iPhone 13 Pro" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>السعر المطلوب (بالجنيه المصري):</label>
+                        <input type="number" placeholder="مثال: 25000" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <button type="submit" class="btn-submit">تأكيد الانتقال لخطوة رفع الصور</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ================= 5. صفحة إضافة إعلان جديد ================= -->
+        <div id="add-ad-page" class="page-section">
+            <button class="back-home-btn" onclick="showPage('home-page')"><i class="fa-solid fa-arrow-right"></i> عودة للرئيسية</button>
+            <div class="section-header">
+                <h2 class="section-title">صفحة إضافة إعلان جديد بالكامل</h2>
+            </div>
+
+            <div class="sell-section-box">
+                <form class="sell-form" onsubmit="submitForm(event)">
+                    <div class="form-group">
+                        <label>عنوان الإعلان:</label>
+                        <input type="text" placeholder="مثال: هاتف بحالة الزيرو للبيع بسرعة" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>رقم التواصل (واتساب):</label>
+                        <input type="tel" placeholder="010xxxxxxxx" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>تفاصيل وصف الجهاز:</label>
+                        <textarea rows="3" placeholder="اكتب تفاصيل العلبة والضمان ومواصفات الجهاز..."></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <button type="submit" class="btn-submit">
+                            <i class="fa-solid fa-paper-plane"></i> نشر الإعلان فوراً
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- الفوتر -->
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; 2026 - موقع <strong>أشيائي</strong> لتجارة الهواتف المحمولة في مصر</p>
+    </footer>
+
+    <!-- سكربت التنقل بين الصفحات المستقلة -->
+    <script>
+        function showPage(pageId) {
+            // إخفاء جميع الصفحات
+            const pages = document.querySelectorAll('.page-section');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // إظهار الصفحة المطلوبة فقط
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function buyAlert(productName) {
+            alert("مرحباً بك في أشيائي! تم اختيار: " + productName + ". سيتم التواصل معك لتأكيد تفاصيل الدفع والاستلام.");
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            alert("تم إرسال البيانات بنجاح! سيتم مراجعة طلبك وعرضه على منصة أشيائي قريباً.");
+            event.target.reset();
+        }
+    </script>
+</body>
+</html>https://github.com/Ahmad-Geme/-.git
